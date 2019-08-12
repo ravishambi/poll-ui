@@ -5,12 +5,13 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
     card: {
-      width: '100%',
-      height: '300px'
+      width: '30px',
+      height: '30px',
+      padding: '5px'
     },
     media: {
-      height: '100%'
-      
+      height: '100%',
+      textAlign: 'center'
     }
   }));
 

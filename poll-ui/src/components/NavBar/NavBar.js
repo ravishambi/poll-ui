@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import ShowCase from '../ShowCase/ShowCase';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function NavBar() {
+export default function NavBar(props) {
     const classes = useStyles();
     return (
         <div className={classes.root}>
@@ -29,10 +30,11 @@ export default function NavBar() {
                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                         <MenuIcon />
                     </IconButton>
+                    <ShowCase></ShowCase>
                     <Typography variant="h6" className={classes.title}>
                         My Poll
                     </Typography>
-                    <Button color="inherit">Sign Up</Button>
+                    <Button color="inherit" onClick={(e) => props.signupClicked(e)}>Sign Up</Button>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>
