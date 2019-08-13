@@ -44,28 +44,48 @@ const styles = theme => ({
     }
 });
 
+const initialState = {
+    name : {
+        visited : false,
+        value : '',
+        error : ''
+    },
+    username : {
+        visited : false,
+        value : '',
+        error : ''
+    },
+    email : {
+        visited : false,
+        value : '',
+        error : ''
+    },
+    password : {
+        visited : false,
+        value : '',
+        error : ''
+    }
+}
+
 class Signup extends Component {
-    state = {
-        name : {
-            visited : false,
-            value : '',
-            error : ''
-        },
-        username : {
-            visited : false,
-            value : '',
-            error : ''
-        },
-        email : {
-            visited : false,
-            value : '',
-            error : ''
-        },
-        password : {
-            visited : false,
-            value : '',
-            error : ''
-        }
+    constructor(props){
+        super(props);
+        this.state = initialState;
+
+    }
+
+    reset(){
+        this.setState(initialState);
+    }
+
+    componentDidMount(){
+        let updatedState = { ...this.state };
+        updatedState.name.error = '';
+        updatedState.username.error = '';
+        updatedState.email.error = '';
+        updatedState.password.error = '';
+
+        this.setState(updatedState);
     }
 
     submitHandler = () => {
@@ -77,7 +97,8 @@ class Signup extends Component {
 
         Axios.post('http://localhost:6541/api/auth/signup', data)
             .then(result => {
-                alert(result.data);
+                alert("Successfully registered!!");
+                this.reset();
             })
             .catch(err => {
                 console.log(err);
@@ -103,7 +124,8 @@ class Signup extends Component {
         this.setState({
             name : {
                 value : e.target.value,
-                visited : true
+                visited : true,
+                error: ''
             }
         });
     }
@@ -112,7 +134,8 @@ class Signup extends Component {
         this.setState({
             username : {
                 value : e.target.value,
-                visited : true
+                visited : true,
+                error: ''
             }
         });
     }
@@ -121,7 +144,8 @@ class Signup extends Component {
         this.setState({
             password : {
                 value : e.target.value,
-                visited : true
+                visited : true,
+                error: ''
             }
         });
     }
@@ -130,7 +154,8 @@ class Signup extends Component {
         this.setState({
             email : {
                 value : e.target.value,
-                visited : true
+                visited : true,
+                error: ''
             }
         });
     }
