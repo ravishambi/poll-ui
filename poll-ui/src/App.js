@@ -6,6 +6,9 @@ import './App.css';
 import Axios from 'axios';
 //import SignupModal from './components/Signup/SignupModal';
 import Signup from './components/Signup/Signup';
+import { BrowserRouter, Route } from 'react-router-dom';
+import Home from './components/Home/Home';
+import history from './components/History';
 
 
 class App extends Component {
@@ -14,7 +17,8 @@ class App extends Component {
     usernameOrEmail: '',
     password: '',
     visited: false,
-    signupClicked: false
+    signupClicked: false,
+    authenticated: true
   }
 
   loginSubmiteHandler = () => {
@@ -28,12 +32,14 @@ class App extends Component {
       Axios.post('http://localhost:6541/api/auth/signin', data)
         .then(res => {
           if (res.status === 200) {
+            history.push("/home");
             this.setState({
               visited: false,
               usernameOrEmail: '',
-              password: ''
+              password: '',
+              authenticated: true
             });
-            alert("signin successfully!!")
+
           }
 
         })
@@ -69,20 +75,33 @@ class App extends Component {
   }
 
   render() {
-    const signupOrLogin = this.state.signupClicked ? <Signup></Signup> :
-      (<Login username={this.state.usernameOrEmail}
+    let defaultPage = (<Route path="/" exact
+      component={() => <Login username={this.state.usernameOrEmail}
         password={this.state.password}
         clicked={this.loginSubmiteHandler}
         usernameChanged={this.usernameChangeHandler}
         passwordChanged={this.passwordChangeHandler}
         visited={this.state.visited}
-      ></Login>)
+      ></Login>} />);
+      if(this.state.authenticated){
+        defaultPage = (<Route path="/" component={() => <Home></Home>} />)
+      }
+
     return (
-      <div>
-        <NavBar signupClicked={this.signupClickHandler}></NavBar>
-        { signupOrLogin }
-        <Description></Description>
-      </div>
+      <BrowserRouter>
+        <div>
+          <NavBar signupClicked={this.signupClickHandler} authenticated={this.state.authenticated}></NavBar>
+
+          { defaultPage }
+
+          <Route path="/signup" exact
+            component={() => <Signup />} />
+
+          
+
+          <Description></Description>
+        </div>
+      </BrowserRouter>
 
     );
   }

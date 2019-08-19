@@ -271,7 +271,7 @@ class Signup extends Component {
             
             <Fragment>
                 <Paper className={classes.paper}>
-                <form className={classes.container} autoComplete={false}>
+                <form className={classes.container} autoComplete="false">
                     <Typography variant="h4" className={classes.login}>
                         Register
                     </Typography>

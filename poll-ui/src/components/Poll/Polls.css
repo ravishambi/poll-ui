@@ -1,0 +1,8 @@
+.Polls {
+    width : 80%;
+    height : 500px;
+    position: relative;
+    overflow-y: scroll;
+    
+}
+

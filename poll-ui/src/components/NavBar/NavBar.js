@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -7,6 +7,10 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ShowCase from '../ShowCase/ShowCase';
+import { Link } from 'react-router-dom';
+import './NavBar.css';
+import ProfileMenu from './../ProfileMenu/ProfileMenu';
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -23,6 +27,23 @@ const useStyles = makeStyles(theme => ({
 
 export default function NavBar(props) {
     const classes = useStyles();
+    let navLink = <ProfileMenu></ProfileMenu>;
+    if (!props.authenticated) {
+        navLink = (<Fragment>
+            <Link to="/signup" className="link">
+                <Button color="inherit" onClick={(e) => props.signupClicked(e)}>Sign Up</Button>
+            </Link>
+
+            <Link to="/" className="link">
+                <Button color="inherit">Login</Button>
+            </Link>
+        </Fragment>
+        );
+
+    }
+    else {
+
+    }
     return (
         <div className={classes.root}>
             <AppBar position="static">
@@ -30,12 +51,15 @@ export default function NavBar(props) {
                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                         <MenuIcon />
                     </IconButton>
-                    <ShowCase></ShowCase>
+
+                    <ShowCase />
+
                     <Typography variant="h6" className={classes.title}>
                         My Poll
                     </Typography>
-                    <Button color="inherit" onClick={(e) => props.signupClicked(e)}>Sign Up</Button>
-                    <Button color="inherit">Login</Button>
+
+                    {navLink}
+
                 </Toolbar>
             </AppBar>
         </div>
